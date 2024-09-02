@@ -1,7 +1,7 @@
 import { EventEmitter } from 'events'
 import { Buffer } from 'buffer'
 import { DeviceEventEmitter, NativeModules } from 'react-native'
-const Sockets = NativeModules.UdpSockets
+const Sockets = TurboModuleRegistry ? TurboModuleRegistry.get('ReactNativeUdpSockets') : NativeModules.UdpSockets;
 import normalizeBindOptions from './normalizeBindOptions'
 let instances = 0
 const STATE = {

@@ -1,0 +1,16 @@
+{
+  "string": [
+    {
+      "name": "module_desc",
+      "value": "module description"
+    },
+    {
+      "name": "React_native_udpAbility_desc",
+      "value": "description"
+    },
+    {
+      "name": "React_native_udpAbility_label",
+      "value": "label"
+    }
+  ]
+}
