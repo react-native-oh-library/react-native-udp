@@ -31,11 +31,9 @@ import Logger from "./Logger";
 
 export class RNUdpTurboModule extends TurboModule implements TM.ReactNativeUdpSockets.Spec {
     private clientMap: Map<number, socket.MulticastSocket>;
-    private clientBindMap: Map<number, boolean>;
     constructor(ctx) {
         super(ctx);
         this.clientMap = new Map<number, socket.MulticastSocket>();
-        this.clientBindMap = new Map<number, boolean>();
     }
     bind(cId: number, portNumber: number, addressStr: string, options: {
         reusePort: {
@@ -72,7 +70,6 @@ export class RNUdpTurboModule extends TurboModule implements TM.ReactNativeUdpSo
             address: addressStr,
             port: portNumber
         });
-        this.clientBindMap.set(cId, true);
     }
 
     createSocket(cId: number, options: {
@@ -90,7 +87,6 @@ export class RNUdpTurboModule extends TurboModule implements TM.ReactNativeUdpSo
         const udp: socket.MulticastSocket = socket.constructMulticastSocketInstance();
         this.on(udp,cId);
         this.clientMap.set(cId, udp);
-        this.clientBindMap.set(cId, false);
     }
 
     close(cId: number, callback: (errMsg: string) => void): number | null {
@@ -102,7 +98,6 @@ export class RNUdpTurboModule extends TurboModule implements TM.ReactNativeUdpSo
                     return;
                 }
                 this.clientMap.delete(cId);
-                this.clientBindMap.delete(cId);
                 callback(null);
             });
         }
@@ -157,17 +152,13 @@ export class RNUdpTurboModule extends TurboModule implements TM.ReactNativeUdpSo
         if (client == null) {
             return;
         }
-        if (this.clientBindMap.get(cId)) {
-            client.close();
-            client = socket.constructMulticastSocketInstance();
-            this.on(client,cId);
-            this.clientMap.set(cId, client);
-            this.clientBindMap.set(cId, false);
-        }
         let multicastAddressJson: {
             address: string;
             port: number;
-        } = JSON.parse(multicastInterface);
+        } = {
+            address: multicastInterface,
+            port: null
+        }
         let netAddress: socket.NetAddress = multicastAddressJson;
         client.addMembership(netAddress, (err: Object) => {
             if (err) {
@@ -202,11 +193,13 @@ export class RNUdpTurboModule extends TurboModule implements TM.ReactNativeUdpSo
         if (client == null) {
             return;
         }
-        let multicastAddressJson: {
+        let netAddress: {
             address: string;
             port: number;
-        } = JSON.parse(multicastInterface);
-        let netAddress: socket.NetAddress = multicastAddressJson;
+        } = {
+            address: multicastInterface,
+            port: null
+        }
         client.dropMembership(netAddress, (err: Object) => {
             if (err) {
                 Logger.error('drop membership fail, err: ' + JSON.stringify(err));
