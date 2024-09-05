@@ -1,6 +1,6 @@
 {
   "name": "@react-native-oh-tpl/react-native-udp",
-  "version": "4.1.7-0.0.1",
+  "version": "4.1.7-0.0.2",
   "description": "React Native UDP socket API for Android & iOS & harmony",
   "homepage": "https://github.com/react-native-oh-library/react-native-udp",
   "main": "src/index.js",
