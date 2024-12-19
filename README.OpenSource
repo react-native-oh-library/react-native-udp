@@ -1,0 +1,11 @@
+[
+    {
+        "Name": "react-native-udp",
+        "License": "MIT License",
+        "License File": "https://github.com/tradle/react-native-udp/blob/master/LICENSE",
+        "Version Number": "4.1.7",
+        "Owner" : "xiafeng@huawei.com",
+        "Upstream URL": "https://github.com/tradle/react-native-udp",
+        "Description": "React Native UDP socket API for Android & iOS. It allows you to create UDP sockets, imitating Node's dgram API functionalities (check each method documentation for more information)."
+    }
+]
