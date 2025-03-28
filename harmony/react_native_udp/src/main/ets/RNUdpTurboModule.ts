@@ -131,9 +131,6 @@ export class RNUdpTurboModule extends TurboModule implements TM.ReactNativeUdpSo
                 }
             });
         }
-        // else {
-        //     callback("updClient is null");
-        // }
     }
 
     setBroadcast(cId: number, flag: boolean, callback: (err: string | Object | null) => void): void {
