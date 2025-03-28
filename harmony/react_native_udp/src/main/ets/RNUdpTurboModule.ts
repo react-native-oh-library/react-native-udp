@@ -51,7 +51,7 @@ export class RNUdpTurboModule extends TurboModule implements TM.ReactNativeUdpSo
         address: string;
         port: number;
     }) => void): void {
-        let client: socket.MulticastSocket = this.findClient(cId, callback);
+        let client: socket.MulticastSocket = this.findClient(cId);
         if (client == null) {
             callback("udp client not exist", {
                 address: addressStr,
@@ -130,9 +130,6 @@ export class RNUdpTurboModule extends TurboModule implements TM.ReactNativeUdpSo
                     callback();
                 }
             });
-        }
-        else {
-            callback("updClient is null");
         }
     }
 
@@ -224,6 +221,7 @@ export class RNUdpTurboModule extends TurboModule implements TM.ReactNativeUdpSo
             if (callback) {
                 const errorMessage = "UdpError there is no upd ";
                 callback(errorMessage);
+                return ;
             }
         }
         return client;
